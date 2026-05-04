@@ -28,7 +28,7 @@ export default async function HomePage() {
       <section className={styles.hero}>
         <div className={`container ${styles.heroInner}`}>
           <div className={styles.heroContent}>
-            <p className={styles.eyebrow}>University of Oxford · Est. 2024</p>
+            <p className={styles.eyebrow}>University of Oxford · Est. 2026</p>
             <h1 className={styles.heroTitle}>
               Championing <em>Nigerian culture</em> at Oxford
             </h1>
