@@ -1,0 +1,14 @@
+.page { padding: 48px 0 80px; }
+.back { font-size: 13px; color: var(--ng-green); display: inline-block; margin-bottom: 32px; }
+.back:hover { text-decoration: underline; }
+.article { max-width: 680px; }
+.header { margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+.date { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
+.title { font-family: var(--font-display); font-size: 36px; font-weight: 700; line-height: 1.15; letter-spacing: -0.3px; }
+.body { font-size: 16px; line-height: 1.8; color: #333; }
+.body p { margin-bottom: 1.25em; }
+.body h2 { font-family: var(--font-display); font-size: 24px; font-weight: 700; margin: 2em 0 0.75em; }
+.body h3 { font-size: 18px; font-weight: 500; margin: 1.5em 0 0.5em; }
+.body ul, .body ol { padding-left: 1.5em; margin-bottom: 1.25em; }
+.body li { margin-bottom: 0.4em; }
+.body strong { font-weight: 500; }
