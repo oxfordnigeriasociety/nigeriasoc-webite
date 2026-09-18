@@ -21,6 +21,7 @@ export default defineConfig({
             S.documentTypeListItem('newsletter').title('Newsletter'),
             S.documentTypeListItem('govDocument').title('Governing Documents'),
             S.documentTypeListItem('membership').title('Membership'),
+            S.documentTypeListItem('gallery').title('Gallery'),
             S.divider(),
             S.documentTypeListItem('siteSettings').title('Site Settings'),
           ]),
