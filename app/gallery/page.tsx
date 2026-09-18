@@ -1,4 +1,5 @@
 import { getGallery } from '@/lib/sanity'
+import Link from 'next/link'
 
 export default async function GalleryPage() {
   const galleryData = await client.fetch(`*[_type == "gallery"][0]`)
