@@ -8,6 +8,8 @@ const links = [
   { href: '/events', label: 'Events' },
   { href: '/newsletter', label: 'Newsletter' },
   { href: '/about', label: 'About' },
+  { href: '/membership', label: 'Membership' },
+  { href: '/gallery', label: 'Gallery' },
 ]
 
 export function Navbar() {
