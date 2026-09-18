@@ -1,7 +1,7 @@
 import { client } from '@/lib/sanity'
 import styles from '../events/events.module.css' 
 
-export const revalidate = 0; // Forces fresh data from Sanity
+export const revalidate = 0; 
 
 export default async function GalleryPage() {
   const galleryData = await client.fetch(`*[_type == "gallery"][0]`)
@@ -17,13 +17,10 @@ export default async function GalleryPage() {
 
       <div className="container" style={{ padding: '4rem 0', maxWidth: '800px', textAlign: 'center' }}>
         
-        {/* ALBUM DROPDOWNS */}
+        {/* ALBUM DROPDOWNS WITH MODERN ANIMATION */}
         <div style={{ marginBottom: '3rem', textAlign: 'left' }}>
           {galleryData?.albums && galleryData.albums.map((album: any, index: number) => (
-            <details 
-              key={index}
-              style={{ marginBottom: '1rem', cursor: 'pointer', border: '1px solid #e5e5e5', padding: '1.5rem', borderRadius: '8px', backgroundColor: '#fafafa' }}
-            >
+            <details key={index} className={styles.modernDropdown}>
               <summary style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: '1.5rem', fontWeight: 'bold', color: '#0A5C36' }}>
                 {album.heading}
               </summary>
