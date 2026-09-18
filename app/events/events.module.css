@@ -140,3 +140,40 @@
   color: var(--text-muted);
   padding: 40px 0;
 }
+/* MODERN DROPDOWN STYLES */
+.modernDropdown {
+  margin-bottom: 1rem;
+  cursor: pointer;
+  border: 1px solid #e5e5e5;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+/* Remove the 1990s triangle */
+.modernDropdown summary {
+  list-style: none;
+}
+.modernDropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Add a modern plus/minus sign */
+.modernDropdown summary::after {
+  content: '+';
+  float: right;
+  color: #0A5C36;
+}
+.modernDropdown[open] summary::after {
+  content: '−';
+}
+
+/* The smooth fade and slide transition */
+.modernDropdown[open] summary ~ div {
+  animation: sweep .3s ease-in-out;
+}
+
+@keyframes sweep {
+  0%    {opacity: 0; transform: translateY(-10px)}
+  100%  {opacity: 1; transform: translateY(0)}
+}
