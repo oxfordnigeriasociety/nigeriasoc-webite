@@ -3,6 +3,7 @@ import { newsletterSchema } from './newsletter'
 import { govDocumentSchema } from './govDocument'
 import { siteSettingsSchema } from './siteSettings'
 import membership from './membership'
+import gallery from './gallery'
 // ... other imports
 
 export const schemaTypes = [
@@ -11,4 +12,5 @@ export const schemaTypes = [
   govDocumentSchema,
   membership,
   siteSettingsSchema,
+  gallery,
 ]
