@@ -15,6 +15,8 @@ export function Footer() {
           <Link href="/events">Events</Link>
           <Link href="/newsletter">Newsletter</Link>
           <Link href="/about">About</Link>
+          <Link href="/membership">Membership</Link>
+          <Link href="/gallery">Gallery</Link>
           <a href="mailto:contact@oxfordnigeriasoc.org">Contact</a>
         </div>
         <p className={styles.copy}>© {new Date().getFullYear()} Oxford Nigeria Society</p>
