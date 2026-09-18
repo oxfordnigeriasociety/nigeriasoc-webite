@@ -2,6 +2,8 @@ import { client } from '@/lib/sanity'
 import styles from '../events/events.module.css'
 import { PortableText } from '@portabletext/react'
 
+export const revalidate = 0; // This forces the page to always show your latest Sanity updates!
+
 export default async function MembershipPage() {
   const membershipData = await client.fetch(`*[_type == "membership"][0]`)
 
@@ -10,7 +12,7 @@ export default async function MembershipPage() {
       <div className={styles.pageHero}>
         <div className="container">
           <p className={styles.eyebrow}>JOIN US</p>
-          <h1 className={styles.pageTitle}>{membershipData?.title || 'Membership'}</h1>
+          <h1 className={styles.pageTitle}>Membership</h1>
         </div>
       </div>
 
