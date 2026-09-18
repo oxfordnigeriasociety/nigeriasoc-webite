@@ -2,10 +2,20 @@ import { client } from '@/lib/sanity'
 import styles from '../events/events.module.css'
 import { PortableText } from '@portabletext/react'
 
-export const revalidate = 0; // This forces the page to always show your latest Sanity updates!
+export const revalidate = 0;
 
 export default async function MembershipPage() {
   const membershipData = await client.fetch(`*[_type == "membership"][0]`)
+
+  // This rule forces grey text, fixes your spacing, and handles your new text options!
+  const myPortableTextComponents = {
+    block: {
+      normal: ({children}: any) => <p style={{ color: '#555', marginBottom: '1.5rem', lineHeight: '1.6', fontSize: '1rem' }}>{children}</p>,
+      small: ({children}: any) => <p style={{ color: '#555', marginBottom: '1.5rem', lineHeight: '1.6', fontSize: '0.85rem' }}>{children}</p>,
+      large: ({children}: any) => <p style={{ color: '#555', marginBottom: '1.5rem', lineHeight: '1.6', fontSize: '1.25rem' }}>{children}</p>,
+      times: ({children}: any) => <p style={{ color: '#555', marginBottom: '1.5rem', lineHeight: '1.6', fontSize: '1.1rem', fontFamily: '"Times New Roman", Times, serif' }}>{children}</p>,
+    },
+  }
 
   return (
     <div className={styles.page}>
@@ -20,22 +30,27 @@ export default async function MembershipPage() {
         
         {/* RICH TEXT INTRODUCTION */}
         {membershipData?.description && (
-          <div style={{ marginBottom: '3rem', lineHeight: '1.8', fontSize: '1.1rem' }}>
-            <PortableText value={membershipData.description} />
+          <div style={{ marginBottom: '3rem' }}>
+            <PortableText 
+              value={membershipData.description} 
+              components={myPortableTextComponents} 
+            />
           </div>
         )}
 
-        {/* DYNAMIC DROPDOWN BANNERS */}
+        {/* MODERN DROPDOWN BANNERS */}
         {membershipData?.dropdowns && membershipData.dropdowns.map((dropdown: any, index: number) => (
-          <details 
-            key={index}
-            style={{ marginBottom: '1rem', cursor: 'pointer', border: '1px solid #e5e5e5', padding: '1.5rem', borderRadius: '8px', backgroundColor: '#fafafa' }}
-          >
+          <details key={index} className={styles.modernDropdown}>
             <summary style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: '1.5rem', fontWeight: 'bold', color: '#0A5C36' }}>
               {dropdown.heading}
             </summary>
-            <div style={{ marginTop: '1.5rem', lineHeight: '1.8', fontSize: '1.1rem' }}>
-              {dropdown.content && <PortableText value={dropdown.content} />}
+            <div style={{ marginTop: '1.5rem' }}>
+              {dropdown.content && (
+                <PortableText 
+                  value={dropdown.content} 
+                  components={myPortableTextComponents} 
+                />
+              )}
             </div>
           </details>
         ))}
