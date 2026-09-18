@@ -1,4 +1,4 @@
-import { client } from '../../sanity/lib/client' 
+import { getGallery } from '@/lib/sanity'
 
 export default async function GalleryPage() {
   const galleryData = await client.fetch(`*[_type == "gallery"][0]`)
