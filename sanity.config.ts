@@ -20,6 +20,7 @@ export default defineConfig({
             S.documentTypeListItem('event').title('Events'),
             S.documentTypeListItem('newsletter').title('Newsletter'),
             S.documentTypeListItem('govDocument').title('Governing Documents'),
+            S.documentTypeList('membership').title('Membership'),
             S.divider(),
             S.documentTypeListItem('siteSettings').title('Site Settings'),
           ]),
