@@ -1,6 +1,5 @@
 import {defineField, defineType} from 'sanity'
 
-// We define your custom text options here so you have more freedom
 const customTextOptions = {
   type: 'block',
   styles: [
@@ -32,6 +31,20 @@ export default defineType({
           type: 'object',
           fields: [
             { name: 'heading', title: 'Banner Heading', type: 'string' },
+            { 
+              name: 'headingSize', 
+              title: 'Heading Size', 
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Small', value: '1.1rem' },
+                  { title: 'Medium', value: '1.3rem' },
+                  { title: 'Large', value: '1.5rem' }
+                ],
+                layout: 'radio'
+              },
+              initialValue: '1.3rem'
+            },
             { name: 'content', title: 'Banner Content', type: 'array', of: [customTextOptions] }
           ]
         }
