@@ -1,4 +1,4 @@
-import { client } from '../../sanity/lib/client' // Adjust this path if your client is somewhere else, like '@/lib/sanity'
+import { getMemberships } from '@/lib/sanity''
 import Link from 'next/link'
 
 export default async function MembershipPage() {
