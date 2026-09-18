@@ -1,6 +1,8 @@
 import { client } from '@/lib/sanity'
 import styles from '../events/events.module.css' 
 
+export const revalidate = 0; // Forces fresh data from Sanity
+
 export default async function GalleryPage() {
   const galleryData = await client.fetch(`*[_type == "gallery"][0]`)
 
@@ -9,15 +11,39 @@ export default async function GalleryPage() {
       <div className={styles.pageHero}>
         <div className="container">
           <p className={styles.eyebrow}>MEMORIES</p>
-          <h1 className={styles.pageTitle}>{galleryData?.title || 'Gallery'}</h1>
+          <h1 className={styles.pageTitle}>Gallery</h1>
         </div>
       </div>
 
       <div className="container" style={{ padding: '4rem 0', maxWidth: '800px', textAlign: 'center' }}>
-        <p style={{ marginTop: '1rem', marginBottom: '3rem', fontSize: '1.2rem', lineHeight: '1.8' }}>
-          Check out our latest photos and memories from our events!
-        </p>
+        
+        {/* ALBUM DROPDOWNS */}
+        <div style={{ marginBottom: '3rem', textAlign: 'left' }}>
+          {galleryData?.albums && galleryData.albums.map((album: any, index: number) => (
+            <details 
+              key={index}
+              style={{ marginBottom: '1rem', cursor: 'pointer', border: '1px solid #e5e5e5', padding: '1.5rem', borderRadius: '8px', backgroundColor: '#fafafa' }}
+            >
+              <summary style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: '1.5rem', fontWeight: 'bold', color: '#0A5C36' }}>
+                {album.heading}
+              </summary>
+              <div style={{ marginTop: '1.5rem' }}>
+                {album.albumLink && (
+                  <a 
+                    href={album.albumLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ color: '#0A5C36', textDecoration: 'underline', fontWeight: 'bold', fontSize: '1.1rem' }}
+                  >
+                    View Album ↗
+                  </a>
+                )}
+              </div>
+            </details>
+          ))}
+        </div>
 
+        {/* BIG MAIN BUTTON */}
         {galleryData?.photosLink && (
           <a 
             href={galleryData.photosLink} 
@@ -35,7 +61,7 @@ export default async function GalleryPage() {
               fontWeight: 'bold' 
             }}
           >
-            View Google Photos Album 📸
+            View All Photos 📸
           </a>
         )}
       </div>
