@@ -1,4 +1,4 @@
-import { getGallery } from '@/lib/sanity'
+import { client } from '@/lib/sanity'
 import Link from 'next/link'
 
 export default async function GalleryPage() {
