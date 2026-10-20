@@ -13,7 +13,7 @@ export function Footer() {
         </div>
         <div className={styles.links}>
           <Link href="/events">Events</Link>
-          <Link href="/newsletter">Newsletter</Link>
+          {/* <Link href="/newsletter">Newsletter</Link> */}
           <Link href="/about">About</Link>
           <Link href="/membership">Membership</Link>
           <Link href="/gallery">Gallery</Link>
