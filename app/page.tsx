@@ -142,7 +142,7 @@ export default async function HomePage() {
               <p className={styles.eyebrow}>GOVERNANCE</p>
               <h2 className={styles.sectionTitle}>Governing documents</h2>
             </div>
-            <div className={styles.gridDocs}>
+            <div className={styles.grid}>
               {docs.map((doc: any) => (
                 <a key={doc._id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className={styles.docCard}>
                   <span className={styles.docIcon}>📄</span>
@@ -164,7 +164,7 @@ export default async function HomePage() {
             <p className={styles.eyebrow}>GET IN TOUCH</p>
             <h2 className={styles.sectionTitle}>Find us</h2>
           </div>
-          <div className={styles.contactGrid}>
+          <div className={styles.grid}>
             <a href="mailto:contact@oxfordnigeriasoc.org" className={styles.contactCard}>
               <span className={styles.contactIcon}>✉</span>
               <div>
