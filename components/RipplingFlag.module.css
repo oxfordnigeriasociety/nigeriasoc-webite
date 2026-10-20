@@ -1,0 +1,104 @@
+.wrap {
+  --w: 120px;          /* flag width  */
+  --h: 80px;           /* flag height */
+  --n: 60;             /* must match STRIPS in RipplingFlag.tsx */
+  --sw: calc(var(--w) / var(--n));
+  --speed: 1.8s;       /* one full wave cycle */
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Flagpole */
+.pole {
+  position: relative;
+  width: 4px;
+  height: calc(var(--h) + 60px);
+  margin-top: -8px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #bfbfbf, #ffffff 45%, #8c8c8c);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+.pole::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 35% 35%, #fff, #b5b5b5);
+}
+
+.flag {
+  position: relative;
+  width: var(--w);
+  height: var(--h);
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.22));
+}
+
+.strip {
+  --amp: calc(0.5px + var(--i) * 0.11px); /* ~0.5px at the pole, ~7px at the free end */
+  --delay: calc((var(--n) - var(--i)) * var(--speed) / var(--n) * -1.15);
+
+  position: absolute;
+  top: 0;
+  left: calc(var(--i) * var(--sw));
+  width: calc(var(--sw) + 0.6px); /* tiny overlap so no hairline gaps show */
+  height: 100%;
+  overflow: hidden;
+
+  /* Each strip shows its own slice of the green-white-green flag */
+  background: linear-gradient(90deg,
+    #008751 0 33.333%,
+    #ffffff 33.333% 66.666%,
+    #008751 66.666% 100%);
+  background-size: var(--w) 100%;
+  background-position: calc(var(--i) * var(--sw) * -1) 0;
+
+  /* faint edge so the green still reads against the green hero */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.35);
+
+  animation: wave var(--speed) ease-in-out infinite;
+  animation-delay: var(--delay);
+  will-change: transform;
+}
+
+/* Shadow in the folds */
+.strip::after,
+.strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: fold var(--speed) ease-in-out infinite;
+}
+.strip::after {
+  background: #000;
+  animation-delay: calc(var(--delay) - var(--speed) / 4);
+}
+/* Light catching the crests */
+.strip::before {
+  background: #fff;
+  animation-name: sheen;
+  animation-delay: calc(var(--delay) + var(--speed) / 4);
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateY(calc(var(--amp) * -1)); }
+  50%      { transform: translateY(var(--amp)); }
+}
+@keyframes fold {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: 0.22; }
+}
+@keyframes sheen {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: 0.14; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip, .strip::before, .strip::after { animation: none; }
+}
