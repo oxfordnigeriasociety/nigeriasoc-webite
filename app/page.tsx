@@ -50,24 +50,25 @@ export default async function HomePage() {
             <div className={styles.decorCircle1} />
             <div className={styles.decorCircle2} />
             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              {/* Sleek, Waving CSS Flag */}
+              {/* 3D Rippling Flag */}
               <div style={{ 
                 display: 'flex', 
                 width: '120px', 
                 height: '80px', 
-                borderRadius: '6px', 
+                borderRadius: '4px', 
                 overflow: 'hidden', 
-                boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-                animation: 'gentleWave 4s ease-in-out infinite' 
+                boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+                transformOrigin: 'left center',
+                animation: 'flagRipple 1.2s ease-in-out infinite alternate' 
               }}>
                 <div style={{ flex: 1, backgroundColor: '#008751' }} />
                 <div style={{ flex: 1, backgroundColor: '#FFFFFF' }} />
                 <div style={{ flex: 1, backgroundColor: '#008751' }} />
               </div>
               <style>{`
-                @keyframes gentleWave {
-                  0%, 100% { transform: translateY(0) rotate(0deg); }
-                  50% { transform: translateY(-6px) rotate(2deg); }
+                @keyframes flagRipple {
+                  0% { transform: perspective(500px) rotateY(15deg) skewY(2deg); }
+                  100% { transform: perspective(500px) rotateY(-15deg) skewY(-2deg); }
                 }
               `}</style>
             </div>
@@ -147,7 +148,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Governing Documents (Perfect Original Layout) */}
+      {/* Governing Documents (Restored to perfectly original layout and fonts) */}
       {docs?.length > 0 && (
         <section className={styles.sectionDark}>
           <div className="container">
@@ -155,7 +156,7 @@ export default async function HomePage() {
               <p className={styles.eyebrow}>GOVERNANCE</p>
               <h2 className={styles.sectionTitle}>Governing documents</h2>
             </div>
-            <div className={styles.grid}>
+            <div className={styles.gridDocs}>
               {docs.map((doc: any) => (
                 <a key={doc._id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className={styles.docCard}>
                   <span className={styles.docIcon}>📄</span>
@@ -170,14 +171,14 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Contact Section (Perfect Original Layout) */}
+      {/* Contact Section (Restored to perfectly original layout and fonts) */}
       <section className={styles.section}>
         <div className="container">
           <div className={styles.sectionHeader}>
             <p className={styles.eyebrow}>GET IN TOUCH</p>
             <h2 className={styles.sectionTitle}>Find us</h2>
           </div>
-          <div className={styles.grid}>
+          <div className={styles.contactGrid}>
             <a href="mailto:contact@oxfordnigeriasoc.org" className={styles.contactCard}>
               <span className={styles.contactIcon}>✉</span>
               <div>
