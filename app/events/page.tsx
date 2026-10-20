@@ -75,4 +75,67 @@ export default async function EventsPage() {
                         <img 
                           src={event.imageUrl} 
                           alt={event.title} 
-                          style={{
+                          style={{ 
+                            width: '110px', 
+                            height: '110px', 
+                            borderRadius: '50%', 
+                            objectFit: 'cover', 
+                            boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
+                            border: '3px solid white'
+                          }} 
+                        />
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </section>
+        )}
+
+        {upcoming.length === 0 && (
+          <section className={styles.section}>
+            <p className={styles.empty}>No upcoming events right now — check back soon.</p>
+          </section>
+        )}
+
+        {past.length > 0 && (
+          <section className={styles.section}>
+            <h2 className={`${styles.sectionTitle} ${styles.pastTitle}`}>Past events</h2>
+            <div className={styles.grid}>
+              {past.map((event: any) => {
+                const d = formatDate(event.date)
+                return (
+                  <div key={event._id} className={`${styles.card} ${styles.pastCard}`} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1.5rem' }}>
+                    
+                    <div style={{ display: 'flex', flexGrow: 1, gap: '1.5rem' }}>
+                      <div className={`${styles.cardDate} ${styles.pastDate}`} style={{ flexShrink: 0 }}>
+                        <span className={styles.day}>{d.day}</span>
+                        <span className={styles.month}>{d.month}</span>
+                      </div>
+                      
+                      <div className={styles.cardBody}>
+                        <h3 className={styles.cardTitle}>{event.title}</h3>
+                        <p className={styles.cardMeta}>{d.full} · {event.location}</p>
+                      </div>
+                    </div>
+                    
+                    {event.imageUrl && (
+                      <div style={{ flexShrink: 0, opacity: 0.8 }}>
+                        <img 
+                          src={event.imageUrl} 
+                          alt={event.title} 
+                          style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '2px solid white' }} 
+                        />
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </section>
+        )}
+      </div>
+    </div>
+  )
+}
