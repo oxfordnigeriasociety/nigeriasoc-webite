@@ -30,12 +30,9 @@ export default async function HomePage() {
           <div className={styles.heroContent}>
             <p className={styles.eyebrow}>University of Oxford · Est. 2026</p>
             <h1 className={styles.heroTitle}>
-              Championing <em>Nigerian culture</em> at Oxford
+              Championing <em>Nigerian culture</em> at the University of Oxford
             </h1>
-            <p className={styles.heroMission}>
-              {settings?.missionStatement ||
-                'To champion Nigerian culture within the University of Oxford, fostering a strong network that inspires lifelong engagement and direct connections to Nigeria.'}
-            </p>
+            
             <div className={styles.heroActions}>
               {settings?.whatsappLink && (
                 <a href={settings.whatsappLink} target="_blank" rel="noopener noreferrer" className={styles.btnPrimary}>
@@ -47,10 +44,18 @@ export default async function HomePage() {
               </Link>
             </div>
           </div>
+
           <div className={styles.heroDecor} aria-hidden="true">
             <div className={styles.decorCircle1} />
             <div className={styles.decorCircle2} />
-            <span className={styles.decorFlag}>🇳🇬</span>
+            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              {/* Minimalist Nigerian Flag SVG */}
+              <svg width="120" height="120" viewBox="0 0 120 120" style={{ borderRadius: '50%', boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}>
+                <rect x="0" y="0" width="40" height="120" fill="#0A5C36" />
+                <rect x="40" y="0" width="40" height="120" fill="#FFFFFF" />
+                <rect x="80" y="0" width="40" height="120" fill="#0A5C36" />
+              </svg>
+            </div>
           </div>
         </div>
       </section>
@@ -59,39 +64,67 @@ export default async function HomePage() {
       {events?.length > 0 && (
         <section className={styles.section}>
           <div className="container">
-            <div className={styles.sectionHeader}>
+            <div className={styles.sectionHeader} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem' }}>
               <div>
-                <p className={styles.sectionLabel}>Upcoming events</p>
+                <p className={styles.eyebrow}>UPCOMING EVENTS</p>
                 <h2 className={styles.sectionTitle}>What's on</h2>
               </div>
-              <Link href="/events" className={styles.seeAll}>View all →</Link>
+              <Link href="/events" style={{ color: '#0A5C36', fontWeight: 'bold', textDecoration: 'none' }}>
+                View all →
+              </Link>
             </div>
-            <div className={styles.eventsGrid}>
+            
+            <div className={styles.grid}>
               {events.map((event: any) => {
                 const d = formatDate(event.date)
                 return (
-                  <div key={event._id} className={styles.eventCard}>
-                    <div className={styles.eventDate}>
-                      <span className={styles.eventDay}>{d.day}</span>
-                      <span className={styles.eventMonth}>{d.month}</span>
+                  <div key={event._id} className={styles.card} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1.5rem' }}>
+                    
+                    <div style={{ display: 'flex', flexGrow: 1, gap: '1.5rem' }}>
+                      <div className={styles.cardDate} style={{ flexShrink: 0 }}>
+                        <span className={styles.day}>{d.day}</span>
+                        <span className={styles.month}>{d.month}</span>
+                      </div>
+                      
+                      <div className={styles.cardBody}>
+                        <h3 className={styles.cardTitle}>{event.title}</h3>
+                        <p className={styles.cardMeta}>
+                          {d.full} · {d.time}
+                          {event.location && ` · ${event.location}`}
+                          {event.isFree && <span className={styles.badge}>Free</span>}
+                        </p>
+                        
+                        {event.description && (
+                          <p className={styles.cardDesc} style={{ whiteSpace: 'pre-wrap', lineHeight: '1.6', marginBottom: '1rem' }}>
+                            {event.description}
+                          </p>
+                        )}
+                        
+                        {event.rsvpLink && (
+                          <a href={event.rsvpLink} target="_blank" rel="noopener noreferrer" className={styles.rsvpBtn}>
+                            RSVP for this event →
+                          </a>
+                        )}
+                      </div>
                     </div>
-                    <div className={styles.eventInfo}>
-                      <h3 className={styles.eventTitle}>{event.title}</h3>
-                      <p className={styles.eventMeta}>
-                        {event.location && <span>{event.location}</span>}
-                        {event.location && ' · '}
-                        <span>{d.time}</span>
-                        {event.isFree && <span className={styles.freeBadge}>Free</span>}
-                      </p>
-                      {event.description && (
-                        <p className={styles.eventDesc}>{event.description}</p>
-                      )}
-                      {event.rsvpLink && (
-                        <a href={event.rsvpLink} target="_blank" rel="noopener noreferrer" className={styles.rsvpLink}>
-                          RSVP →
-                        </a>
-                      )}
-                    </div>
+
+                    {/* Sleek Picture Bubble */}
+                    {event.imageUrl && (
+                      <div style={{ flexShrink: 0 }}>
+                        <img 
+                          src={event.imageUrl} 
+                          alt={event.title} 
+                          style={{ 
+                            width: '110px', 
+                            height: '110px', 
+                            borderRadius: '50%', 
+                            objectFit: 'cover', 
+                            boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
+                            border: '3px solid white'
+                          }} 
+                        />
+                      </div>
+                    )}
                   </div>
                 )
               })}
@@ -100,86 +133,17 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Newsletter */}
-      {newsletters?.length > 0 && (
-        <section className={`${styles.section} ${styles.newsletterSection}`}>
-          <div className="container">
-            <div className={styles.sectionHeader}>
-              <div>
-                <p className={styles.sectionLabel}>Newsletter</p>
-                <h2 className={styles.sectionTitle}>Latest issues</h2>
-              </div>
-              <Link href="/newsletter" className={styles.seeAll}>View all →</Link>
-            </div>
-            <div className={styles.newsletterGrid}>
-              {newsletters.slice(0, 3).map((n: any) => (
-                <Link key={n._id} href={`/newsletter/${n._id}`} className={styles.newsletterCard}>
-                  <div>
-                    <h3 className={styles.newsletterTitle}>{n.title}</h3>
-                    <p className={styles.newsletterDate}>
-                      {new Date(n.publishedAt).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
-                    </p>
-                    {n.excerpt && <p className={styles.newsletterExcerpt}>{n.excerpt}</p>}
-                  </div>
-                  <span className={styles.arrow}>→</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Governing Docs */}
+      {/* Governing Documents */}
       {docs?.length > 0 && (
-        <section className={styles.section}>
+        <section className={styles.sectionDark} style={{ backgroundColor: '#fafafa', padding: '4rem 0' }}>
           <div className="container">
-            <p className={styles.sectionLabel}>Governance</p>
-            <h2 className={styles.sectionTitle}>Governing documents</h2>
-            <div className={styles.docsGrid}>
-              {docs.map((doc: any) => (
-                <a key={doc._id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className={styles.docCard}>
-                  <span className={styles.docIcon}>📄</span>
-                  <div>
-                    <h3 className={styles.docTitle}>{doc.title}</h3>
-                    <p className={styles.docSub}>View on Google Drive →</p>
-                  </div>
-                </a>
-              ))}
+            <div className={styles.sectionHeader} style={{ marginBottom: '2rem' }}>
+              <p className={styles.eyebrow}>GOVERNANCE</p>
+              <h2 className={styles.sectionTitle}>Governing documents</h2>
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* Contact */}
-      <section className={styles.contactSection}>
-        <div className="container">
-          <p className={styles.sectionLabel}>Get in touch</p>
-          <h2 className={styles.sectionTitle}>Find us</h2>
-          <div className={styles.contactGrid}>
-            {settings?.email && (
-              <a href={`mailto:${settings.email}`} className={styles.contactCard}>
-                <span className={styles.contactIcon}>✉</span>
-                <span className={styles.contactLabel}>Email</span>
-                <span className={styles.contactValue}>{settings.email}</span>
-              </a>
-            )}
-            {settings?.instagram && (
-              <a href={`https://instagram.com/${settings.instagram.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className={styles.contactCard}>
-                <span className={styles.contactIcon}>📸</span>
-                <span className={styles.contactLabel}>Instagram</span>
-                <span className={styles.contactValue}>{settings.instagram}</span>
-              </a>
-            )}
-            {settings?.whatsappLink && (
-              <a href={settings.whatsappLink} target="_blank" rel="noopener noreferrer" className={styles.contactCard}>
-                <span className={styles.contactIcon}>💬</span>
-                <span className={styles.contactLabel}>WhatsApp</span>
-                <span className={styles.contactValue}>Join group</span>
-              </a>
-            )}
-          </div>
-        </div>
-      </section>
-    </>
-  )
-}
+            <div className={styles.gridDocs} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
+              {docs.map((doc: any) => (
+                <a key={doc._id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className={styles.docCard} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem', backgroundColor: 'white', border: '1px solid #eaeaea', borderRadius: '8px', textDecoration: 'none', color: 'inherit' }}>
+                  <span className={styles.docIcon} style={{ fontSize: '1.5rem' }}>📄</span>
+                  <div>
+                    <h3 className={styles.docTitle} style={{ fontSize: '1.1rem', margin: '0 0 0.25rem 0'
