@@ -26,11 +26,16 @@ export async function getUpcomingEvents() {
 }
 
 export async function getAllEvents() {
-  return client.fetch(`
-    *[_type == "event"] | order(date desc) {
-      _id, title, date, location, description, image
-    }
-  `)
+  return await client.fetch(`*[_type == "event"] | order(date asc) {
+    _id,
+    title,
+    date,
+    location,
+    isFree,
+    description,
+    rsvpLink,
+    "imageUrl": image.asset->url
+  }`)
 }
 
 export async function getNewsletters() {
