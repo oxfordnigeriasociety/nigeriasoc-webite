@@ -1,7 +1,10 @@
 import Link from 'next/link'
 import { getUpcomingEvents, getNewsletters, getDocuments, getSiteSettings } from '@/lib/sanity'
+import { RipplingFlag } from '@/components/RipplingFlag'
 import styles from './page.module.css'
-import eventStyles from './events/events.module.css' 
+import eventStyles from './events/events.module.css'
+// Reuse the About page's styles so Governing documents + contact look identical there and here
+import aboutStyles from './about/about.module.css'
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr)
@@ -23,6 +26,9 @@ export default async function HomePage() {
     getSiteSettings(),
   ])
 
+  const email = settings?.email || 'contact@oxfordnigeriasoc.org'
+  const instagram = settings?.instagram as string | undefined
+
   return (
     <>
       {/* Hero */}
@@ -33,7 +39,7 @@ export default async function HomePage() {
             <h1 className={styles.heroTitle}>
               Championing <em>Nigerian culture</em> at the University of Oxford
             </h1>
-            
+
             <div className={styles.heroActions}>
               {settings?.whatsappLink && (
                 <a href={settings.whatsappLink} target="_blank" rel="noopener noreferrer" className={styles.btnPrimary}>
@@ -49,28 +55,8 @@ export default async function HomePage() {
           <div className={styles.heroDecor} aria-hidden="true">
             <div className={styles.decorCircle1} />
             <div className={styles.decorCircle2} />
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              {/* 3D Rippling Flag */}
-              <div style={{ 
-                display: 'flex', 
-                width: '120px', 
-                height: '80px', 
-                borderRadius: '4px', 
-                overflow: 'hidden', 
-                boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
-                transformOrigin: 'left center',
-                animation: 'flagRipple 1.2s ease-in-out infinite alternate' 
-              }}>
-                <div style={{ flex: 1, backgroundColor: '#008751' }} />
-                <div style={{ flex: 1, backgroundColor: '#FFFFFF' }} />
-                <div style={{ flex: 1, backgroundColor: '#008751' }} />
-              </div>
-              <style>{`
-                @keyframes flagRipple {
-                  0% { transform: perspective(500px) rotateY(15deg) skewY(2deg); }
-                  100% { transform: perspective(500px) rotateY(-15deg) skewY(-2deg); }
-                }
-              `}</style>
+            <div className={styles.flagHolder}>
+              <RipplingFlag />
             </div>
           </div>
         </div>
@@ -79,66 +65,48 @@ export default async function HomePage() {
       {/* Events */}
       {events?.length > 0 && (
         <section className={styles.section}>
-          <div className="container" style={{ textAlign: 'left' }}>
-            <div className={styles.sectionHeader} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem', textAlign: 'left' }}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
               <div>
-                <p className={styles.eyebrow}>UPCOMING EVENTS</p>
-                <h2 className={styles.sectionTitle}>What's on</h2>
+                <p className={styles.sectionLabel}>Upcoming events</p>
+                <h2 className={styles.sectionTitle}>What&apos;s on</h2>
               </div>
-              <Link href="/events" style={{ color: '#0A5C36', fontWeight: 'bold', textDecoration: 'none' }}>
+              <Link href="/events" className={styles.seeAll}>
                 View all →
               </Link>
             </div>
-            
+
             <div className={eventStyles.grid}>
               {events.map((event: any) => {
                 const d = formatDate(event.date)
                 return (
-                  <div key={event._id} className={eventStyles.card} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1.5rem' }}>
-                    
-                    <div style={{ display: 'flex', flexGrow: 1, gap: '1.5rem' }}>
-                      <div className={eventStyles.cardDate} style={{ flexShrink: 0 }}>
-                        <span className={eventStyles.day}>{d.day}</span>
-                        <span className={eventStyles.month}>{d.month}</span>
-                      </div>
-                      
-                      <div className={eventStyles.cardBody}>
-                        <h3 className={eventStyles.cardTitle}>{event.title}</h3>
-                        <p className={eventStyles.cardMeta}>
-                          {d.full} · {d.time}
-                          {event.location && ` · ${event.location}`}
-                          {event.isFree && <span className={eventStyles.badge}>Free</span>}
-                        </p>
-                        
-                        {event.description && (
-                          <p className={eventStyles.cardDesc} style={{ whiteSpace: 'pre-wrap', lineHeight: '1.6', marginBottom: '1rem' }}>
-                            {event.description}
-                          </p>
-                        )}
-                        
-                        {event.rsvpLink && (
-                          <a href={event.rsvpLink} target="_blank" rel="noopener noreferrer" className={eventStyles.rsvpBtn}>
-                            RSVP for this event →
-                          </a>
-                        )}
-                      </div>
+                  <div key={event._id} className={`${eventStyles.card} ${styles.homeEventCard}`}>
+                    <div className={eventStyles.cardDate}>
+                      <span className={eventStyles.day}>{d.day}</span>
+                      <span className={eventStyles.month}>{d.month}</span>
+                    </div>
+
+                    <div className={eventStyles.cardBody}>
+                      <h3 className={eventStyles.cardTitle}>{event.title}</h3>
+                      <p className={eventStyles.cardMeta}>
+                        {d.full} · {d.time}
+                        {event.location && ` · ${event.location}`}
+                        {event.isFree && <span className={eventStyles.badge}>Free</span>}
+                      </p>
+
+                      {event.description && (
+                        <p className={`${eventStyles.cardDesc} ${styles.preWrap}`}>{event.description}</p>
+                      )}
+
+                      {event.rsvpLink && (
+                        <a href={event.rsvpLink} target="_blank" rel="noopener noreferrer" className={eventStyles.rsvpBtn}>
+                          RSVP for this event →
+                        </a>
+                      )}
                     </div>
 
                     {event.imageUrl && (
-                      <div style={{ flexShrink: 0 }}>
-                        <img 
-                          src={event.imageUrl} 
-                          alt={event.title} 
-                          style={{ 
-                            width: '110px', 
-                            height: '110px', 
-                            borderRadius: '50%', 
-                            objectFit: 'cover', 
-                            boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
-                            border: '3px solid white'
-                          }} 
-                        />
-                      </div>
+                      <img src={event.imageUrl} alt={event.title} className={styles.eventThumb} />
                     )}
                   </div>
                 )
@@ -148,21 +116,19 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Governing Documents - Forced Horizontal Grid and Left Alignment */}
+      {/* Governing documents — identical to the About page */}
       {docs?.length > 0 && (
-        <section className={styles.sectionDark}>
-          <div className="container" style={{ textAlign: 'left' }}>
-            <div className={styles.sectionHeader} style={{ textAlign: 'left', marginBottom: '2rem' }}>
-              <p className={styles.eyebrow}>GOVERNANCE</p>
-              <h2 className={styles.sectionTitle}>Governing documents</h2>
-            </div>
-            <div className={eventStyles.grid}>
+        <section className={styles.section}>
+          <div className="container">
+            <h2 className={aboutStyles.sectionTitle}>Governing documents</h2>
+            <p className={aboutStyles.sectionSub}>Our constitution and code of conduct govern how the society operates.</p>
+            <div className={aboutStyles.docsGrid}>
               {docs.map((doc: any) => (
-                <a key={doc._id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem', textDecoration: 'none', color: 'inherit', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #eaeaea' }}>
-                  <span style={{ fontSize: '1.5rem' }}>📄</span>
+                <a key={doc._id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className={aboutStyles.docCard}>
+                  <span className={aboutStyles.docIcon}>📄</span>
                   <div>
-                    <h3 style={{ fontSize: '1.1rem', margin: '0 0 0.25rem 0', fontWeight: 'bold' }}>{doc.title}</h3>
-                    <span style={{ color: '#0A5C36', fontSize: '0.9rem', fontWeight: 'bold' }}>View on Google Drive →</span>
+                    <h3 className={aboutStyles.docTitle}>{doc.title}</h3>
+                    <p className={aboutStyles.docSub}>View on Google Drive →</p>
                   </div>
                 </a>
               ))}
@@ -171,30 +137,31 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Contact Section - Forced Horizontal Grid, Left Alignment, and Fixed Fonts */}
-      <section className={styles.section}>
-        <div className="container" style={{ textAlign: 'left' }}>
-          <div className={styles.sectionHeader} style={{ textAlign: 'left', marginBottom: '2rem' }}>
-            <p className={styles.eyebrow}>GET IN TOUCH</p>
-            <h2 className={styles.sectionTitle}>Find us</h2>
-          </div>
-          <div className={eventStyles.grid}>
-            <a href="mailto:contact@oxfordnigeriasoc.org" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem', textDecoration: 'none', color: 'inherit', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #eaeaea' }}>
-              <span style={{ fontSize: '1.5rem' }}>✉</span>
-              <div>
-                <h3 style={{ fontSize: '0.8rem', fontWeight: 'normal', color: '#888', letterSpacing: '1px', margin: '0 0 0.25rem 0' }}>EMAIL</h3>
-                <p style={{ margin: 0, fontWeight: 'bold' }}>contact@oxfordnigeriasoc.org</p>
-              </div>
-            </a>
-            {settings?.instagramLink && (
-              <a href={settings.instagramLink} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem', textDecoration: 'none', color: 'inherit', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #eaeaea' }}>
-                <span style={{ fontSize: '1.5rem' }}>📸</span>
-                <div>
-                  <h3 style={{ fontSize: '0.8rem', fontWeight: 'normal', color: '#888', letterSpacing: '1px', margin: '0 0 0.25rem 0' }}>INSTAGRAM</h3>
-                  <p style={{ margin: 0, fontWeight: 'bold' }}>@oxfordnigeriasociety</p>
-                </div>
+      {/* Find us — same style as "Get in touch" on the About page */}
+      <section className={styles.sectionLast}>
+        <div className="container">
+          <div className={aboutStyles.contactSection}>
+            <h2 className={aboutStyles.sectionTitle}>Find us</h2>
+            <div className={aboutStyles.contactRow}>
+              <a href={`mailto:${email}`} className={aboutStyles.contactItem}>
+                <span>✉</span> {email}
               </a>
-            )}
+              {instagram && (
+                <a
+                  href={`https://instagram.com/${instagram.replace('@', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={aboutStyles.contactItem}
+                >
+                  <span>📸</span> {instagram}
+                </a>
+              )}
+              {settings?.whatsappLink && (
+                <a href={settings.whatsappLink} target="_blank" rel="noopener noreferrer" className={aboutStyles.contactItem}>
+                  <span>💬</span> Join our WhatsApp
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </section>
