@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { getUpcomingEvents, getNewsletters, getDocuments, getSiteSettings } from '@/lib/sanity'
 import styles from './page.module.css'
-import eventStyles from './events/events.module.css' // This brings in the exact styling from your Events page!
+import eventStyles from './events/events.module.css' 
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr)
@@ -50,12 +50,26 @@ export default async function HomePage() {
             <div className={styles.decorCircle1} />
             <div className={styles.decorCircle2} />
             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              {/* We will swap this out for the GIF in the very next step! */}
-              <svg width="120" height="120" viewBox="0 0 120 120" style={{ borderRadius: '50%', boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}>
-                <rect x="0" y="0" width="40" height="120" fill="#0A5C36" />
-                <rect x="40" y="0" width="40" height="120" fill="#FFFFFF" />
-                <rect x="80" y="0" width="40" height="120" fill="#0A5C36" />
-              </svg>
+              {/* Sleek, Waving CSS Flag */}
+              <div style={{ 
+                display: 'flex', 
+                width: '120px', 
+                height: '80px', 
+                borderRadius: '6px', 
+                overflow: 'hidden', 
+                boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                animation: 'gentleWave 4s ease-in-out infinite' 
+              }}>
+                <div style={{ flex: 1, backgroundColor: '#008751' }} />
+                <div style={{ flex: 1, backgroundColor: '#FFFFFF' }} />
+                <div style={{ flex: 1, backgroundColor: '#008751' }} />
+              </div>
+              <style>{`
+                @keyframes gentleWave {
+                  0%, 100% { transform: translateY(0) rotate(0deg); }
+                  50% { transform: translateY(-6px) rotate(2deg); }
+                }
+              `}</style>
             </div>
           </div>
         </div>
@@ -75,7 +89,6 @@ export default async function HomePage() {
               </Link>
             </div>
             
-            {/* Notice this now uses eventStyles so it matches perfectly */}
             <div className={eventStyles.grid}>
               {events.map((event: any) => {
                 const d = formatDate(event.date)
@@ -134,7 +147,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Governing Documents (Restored to original layout) */}
+      {/* Governing Documents (Perfect Original Layout) */}
       {docs?.length > 0 && (
         <section className={styles.sectionDark}>
           <div className="container">
@@ -157,7 +170,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Contact Section (Restored to original layout) */}
+      {/* Contact Section (Perfect Original Layout) */}
       <section className={styles.section}>
         <div className="container">
           <div className={styles.sectionHeader}>
