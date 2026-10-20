@@ -79,8 +79,8 @@ export default async function HomePage() {
       {/* Events */}
       {events?.length > 0 && (
         <section className={styles.section}>
-          <div className="container">
-            <div className={styles.sectionHeader} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem' }}>
+          <div className="container" style={{ textAlign: 'left' }}>
+            <div className={styles.sectionHeader} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem', textAlign: 'left' }}>
               <div>
                 <p className={styles.eyebrow}>UPCOMING EVENTS</p>
                 <h2 className={styles.sectionTitle}>What's on</h2>
@@ -148,21 +148,21 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Governing Documents (Restored to perfectly original layout and fonts) */}
+      {/* Governing Documents - Forced Horizontal Grid and Left Alignment */}
       {docs?.length > 0 && (
         <section className={styles.sectionDark}>
-          <div className="container">
-            <div className={styles.sectionHeader}>
+          <div className="container" style={{ textAlign: 'left' }}>
+            <div className={styles.sectionHeader} style={{ textAlign: 'left', marginBottom: '2rem' }}>
               <p className={styles.eyebrow}>GOVERNANCE</p>
               <h2 className={styles.sectionTitle}>Governing documents</h2>
             </div>
-            <div className={styles.gridDocs}>
+            <div className={eventStyles.grid}>
               {docs.map((doc: any) => (
-                <a key={doc._id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className={styles.docCard}>
-                  <span className={styles.docIcon}>📄</span>
+                <a key={doc._id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem', textDecoration: 'none', color: 'inherit', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #eaeaea' }}>
+                  <span style={{ fontSize: '1.5rem' }}>📄</span>
                   <div>
-                    <h3 className={styles.docTitle}>{doc.title}</h3>
-                    <span className={styles.docLink}>View on Google Drive →</span>
+                    <h3 style={{ fontSize: '1.1rem', margin: '0 0 0.25rem 0', fontWeight: 'bold' }}>{doc.title}</h3>
+                    <span style={{ color: '#0A5C36', fontSize: '0.9rem', fontWeight: 'bold' }}>View on Google Drive →</span>
                   </div>
                 </a>
               ))}
@@ -171,27 +171,27 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Contact Section (Restored to perfectly original layout and fonts) */}
+      {/* Contact Section - Forced Horizontal Grid, Left Alignment, and Fixed Fonts */}
       <section className={styles.section}>
-        <div className="container">
-          <div className={styles.sectionHeader}>
+        <div className="container" style={{ textAlign: 'left' }}>
+          <div className={styles.sectionHeader} style={{ textAlign: 'left', marginBottom: '2rem' }}>
             <p className={styles.eyebrow}>GET IN TOUCH</p>
             <h2 className={styles.sectionTitle}>Find us</h2>
           </div>
-          <div className={styles.contactGrid}>
-            <a href="mailto:contact@oxfordnigeriasoc.org" className={styles.contactCard}>
-              <span className={styles.contactIcon}>✉</span>
+          <div className={eventStyles.grid}>
+            <a href="mailto:contact@oxfordnigeriasoc.org" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem', textDecoration: 'none', color: 'inherit', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #eaeaea' }}>
+              <span style={{ fontSize: '1.5rem' }}>✉</span>
               <div>
-                <h3 className={styles.contactTitle}>EMAIL</h3>
-                <p className={styles.contactValue}>contact@oxfordnigeriasoc.org</p>
+                <h3 style={{ fontSize: '0.8rem', fontWeight: 'normal', color: '#888', letterSpacing: '1px', margin: '0 0 0.25rem 0' }}>EMAIL</h3>
+                <p style={{ margin: 0, fontWeight: 'bold' }}>contact@oxfordnigeriasoc.org</p>
               </div>
             </a>
             {settings?.instagramLink && (
-              <a href={settings.instagramLink} target="_blank" rel="noopener noreferrer" className={styles.contactCard}>
-                <span className={styles.contactIcon}>📸</span>
+              <a href={settings.instagramLink} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem', textDecoration: 'none', color: 'inherit', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #eaeaea' }}>
+                <span style={{ fontSize: '1.5rem' }}>📸</span>
                 <div>
-                  <h3 className={styles.contactTitle}>INSTAGRAM</h3>
-                  <p className={styles.contactValue}>@oxfordnigeriasociety</p>
+                  <h3 style={{ fontSize: '0.8rem', fontWeight: 'normal', color: '#888', letterSpacing: '1px', margin: '0 0 0.25rem 0' }}>INSTAGRAM</h3>
+                  <p style={{ margin: 0, fontWeight: 'bold' }}>@oxfordnigeriasociety</p>
                 </div>
               </a>
             )}
