@@ -146,4 +146,43 @@ export default async function HomePage() {
                 <a key={doc._id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className={styles.docCard} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem', backgroundColor: 'white', border: '1px solid #eaeaea', borderRadius: '8px', textDecoration: 'none', color: 'inherit' }}>
                   <span className={styles.docIcon} style={{ fontSize: '1.5rem' }}>📄</span>
                   <div>
-                    <h3 className={styles.docTitle} style={{ fontSize: '1.1rem', margin: '0 0 0.25rem 0'
+                    <h3 className={styles.docTitle} style={{ fontSize: '1.1rem', margin: '0 0 0.25rem 0' }}>{doc.title}</h3>
+                    <span className={styles.docLink} style={{ color: '#0A5C36', fontSize: '0.9rem', fontWeight: 'bold' }}>View on Google Drive →</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Contact Section */}
+      <section className={styles.section} style={{ padding: '4rem 0' }}>
+        <div className="container">
+          <div className={styles.sectionHeader} style={{ marginBottom: '2rem' }}>
+            <p className={styles.eyebrow}>GET IN TOUCH</p>
+            <h2 className={styles.sectionTitle}>Find us</h2>
+          </div>
+          <div className={styles.contactGrid} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            <a href="mailto:contact@oxfordnigeriasoc.org" className={styles.contactCard} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem', backgroundColor: 'white', border: '1px solid #eaeaea', borderRadius: '8px', textDecoration: 'none', color: 'inherit' }}>
+              <span className={styles.contactIcon} style={{ fontSize: '1.5rem' }}>✉</span>
+              <div>
+                <h3 className={styles.contactTitle} style={{ fontSize: '0.8rem', color: '#888', letterSpacing: '1px', margin: '0 0 0.25rem 0' }}>EMAIL</h3>
+                <p className={styles.contactValue} style={{ margin: 0, fontWeight: 'bold' }}>contact@oxfordnigeriasoc.org</p>
+              </div>
+            </a>
+            {settings?.instagramLink && (
+              <a href={settings.instagramLink} target="_blank" rel="noopener noreferrer" className={styles.contactCard} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.5rem', backgroundColor: 'white', border: '1px solid #eaeaea', borderRadius: '8px', textDecoration: 'none', color: 'inherit' }}>
+                <span className={styles.contactIcon} style={{ fontSize: '1.5rem' }}>📸</span>
+                <div>
+                  <h3 className={styles.contactTitle} style={{ fontSize: '0.8rem', color: '#888', letterSpacing: '1px', margin: '0 0 0.25rem 0' }}>INSTAGRAM</h3>
+                  <p className={styles.contactValue} style={{ margin: 0, fontWeight: 'bold' }}>@oxfordnigeriasociety</p>
+                </div>
+              </a>
+            )}
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
