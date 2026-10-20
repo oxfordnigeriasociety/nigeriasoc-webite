@@ -44,7 +44,7 @@
   position: absolute;
   top: 0;
   left: calc(var(--i) * var(--sw));
-  width: calc(var(--sw) + 0.6px); /* tiny overlap so no hairline gaps show */
+  width: calc(var(--sw) + 1.5px); /* overlap so no hairline seams show on scaled screens */
   height: 100%;
   overflow: hidden;
 
@@ -63,7 +63,6 @@
 
   animation: wave var(--speed) ease-in-out infinite;
   animation-delay: var(--delay);
-  will-change: transform;
 }
 
 /* Shadow in the folds */
