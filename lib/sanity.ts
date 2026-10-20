@@ -18,11 +18,9 @@ export function urlFor(source: SanityImageSource) {
 // ── Queries ────────────────────────────────────────────────────────────────────
 
 export async function getUpcomingEvents() {
-  return client.fetch(`
-    *[_type == "event" && date >= now()] | order(date asc) [0...6] {
-      _id, title, date, location, description, image
-    }
-  `)
+  return client.fetch(`*[_type == "event" && date >= now()] | order(date asc) [0...6] {
+    _id, title, date, location, description, rsvpLink, "imageUrl": image.asset->url
+  }`)
 }
 
 export async function getAllEvents() {
